@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import './App.css';
+import { Fretboard } from './Fretboard';
+import { FRETS, type Fret } from './frets';
+import { GUITAR_STRINGS, type GuitarString } from './guitarStrings';
 
 function App() {
   const [stringConfiguration, setStringConfiguration] =
@@ -74,11 +77,10 @@ function App() {
       >
         Practice
       </button>
+      <Fretboard />
     </>
   );
 }
-
-const GUITAR_STRINGS: GuitarString[] = ['E', 'A', 'D', 'G', 'B', 'e'];
 
 const ALL_STRINGS_ENABLED: Record<GuitarString, boolean> = {
   E: true,
@@ -88,10 +90,6 @@ const ALL_STRINGS_ENABLED: Record<GuitarString, boolean> = {
   B: true,
   e: true,
 };
-
-type GuitarString = 'E' | 'A' | 'D' | 'G' | 'B' | 'e';
-
-const FRETS: Fret[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const ALL_FRETS_ENABLED: Record<Fret, boolean> = {
   0: true,
@@ -108,7 +106,5 @@ const ALL_FRETS_ENABLED: Record<Fret, boolean> = {
   11: true,
   12: true,
 };
-
-type Fret = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 export default App;
