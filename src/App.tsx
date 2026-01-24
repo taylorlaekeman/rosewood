@@ -2,10 +2,16 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [configuredStrings, setConfiguredStrings] =
+  const [stringConfiguration, setStringConfiguration] =
     useState<Record<GuitarString, boolean>>(ALL_STRINGS_ENABLED);
-  const [configuredFrets, setConfiguredFrets] =
+  const [fretConfiguration, setFretConfiguration] =
     useState<Record<Fret, boolean>>(ALL_FRETS_ENABLED);
+  const enabledStrings = Object.entries(stringConfiguration)
+    .filter(([_, enabled]) => enabled)
+    .map(([guitarString]) => guitarString);
+  const enabledFrets = Object.entries(fretConfiguration)
+    .filter(([_, enabled]) => enabled)
+    .map((fret) => fret);
   return (
     <>
       <h1>Rosewood</h1>
@@ -14,12 +20,12 @@ function App() {
         {GUITAR_STRINGS.map((guitarString) => (
           <div>
             <input
-              checked={configuredStrings[guitarString]}
+              checked={stringConfiguration[guitarString]}
               id={guitarString}
               onChange={() => {
-                setConfiguredStrings((currentConfiguredStrings) => ({
-                  ...currentConfiguredStrings,
-                  [guitarString]: !currentConfiguredStrings[guitarString],
+                setStringConfiguration((currentStringConfiguration) => ({
+                  ...currentStringConfiguration,
+                  [guitarString]: !currentStringConfiguration[guitarString],
                 }));
               }}
               name={guitarString}
@@ -28,6 +34,9 @@ function App() {
             <label htmlFor={guitarString}>{guitarString}</label>
           </div>
         ))}
+        {enabledStrings.length === 0 && (
+          <p>Please select at least one string</p>
+        )}
       </div>
       <div>
         <p>Frets</p>
@@ -36,12 +45,12 @@ function App() {
           return (
             <div>
               <input
-                checked={configuredFrets[fret]}
+                checked={fretConfiguration[fret]}
                 id={fretString}
                 onChange={() => {
-                  setConfiguredFrets((currentConfiguredFrets) => ({
-                    ...currentConfiguredFrets,
-                    [fret]: !currentConfiguredFrets[fret],
+                  setFretConfiguration((currentFretConfiguration) => ({
+                    ...currentFretConfiguration,
+                    [fret]: !currentFretConfiguration[fret],
                   }));
                 }}
                 name={fretString}
@@ -51,6 +60,7 @@ function App() {
             </div>
           );
         })}
+        {enabledFrets.length === 0 && <p>Please select at least one fret</p>}
       </div>
     </>
   );
