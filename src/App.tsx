@@ -62,6 +62,9 @@ function App() {
         })}
         {enabledFrets.length === 0 && <p>Please select at least one fret</p>}
       </div>
+      {enabledStrings.length === 1 && enabledFrets.length === 1 && (
+        <p>Please select at least two notes</p>
+      )}
     </>
   );
 }
