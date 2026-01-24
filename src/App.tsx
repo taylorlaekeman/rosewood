@@ -17,13 +17,10 @@ function App() {
               checked={configuredStrings[guitarString]}
               id={guitarString}
               onChange={() => {
-                setConfiguredStrings((currentConfiguredStrings) => {
-                  const currentValue = currentConfiguredStrings[guitarString];
-                  return {
-                    ...currentConfiguredStrings,
-                    [guitarString]: !currentValue,
-                  };
-                });
+                setConfiguredStrings((currentConfiguredStrings) => ({
+                  ...currentConfiguredStrings,
+                  [guitarString]: !currentConfiguredStrings[guitarString],
+                }));
               }}
               name={guitarString}
               type="checkbox"
@@ -42,13 +39,10 @@ function App() {
                 checked={configuredFrets[fret]}
                 id={fretString}
                 onChange={() => {
-                  setConfiguredFrets((currentConfiguredFrets) => {
-                    const currentValue = currentConfiguredFrets[fret];
-                    return {
-                      ...currentConfiguredFrets,
-                      [fret]: !currentValue,
-                    };
-                  });
+                  setConfiguredFrets((currentConfiguredFrets) => ({
+                    ...currentConfiguredFrets,
+                    [fret]: !currentConfiguredFrets[fret],
+                  }));
                 }}
                 name={fretString}
                 type="checkbox"
