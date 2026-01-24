@@ -1,35 +1,98 @@
 import { useState } from 'react';
-import viteLogo from '/vite.svg';
-import reactLogo from './assets/react.svg';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [configuredStrings, setConfiguredStrings] =
+    useState<Record<GuitarString, boolean>>(ALL_STRINGS_ENABLED);
+  const [configuredFrets, setConfiguredFrets] =
+    useState<Record<Fret, boolean>>(ALL_FRETS_ENABLED);
   return (
     <>
+      <h1>Rosewood</h1>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <p>Strings</p>
+        {GUITAR_STRINGS.map((guitarString) => (
+          <div>
+            <input
+              checked={configuredStrings[guitarString]}
+              id={guitarString}
+              onChange={() => {
+                setConfiguredStrings((currentConfiguredStrings) => {
+                  const currentValue = currentConfiguredStrings[guitarString];
+                  return {
+                    ...currentConfiguredStrings,
+                    [guitarString]: !currentValue,
+                  };
+                });
+              }}
+              name={guitarString}
+              type="checkbox"
+            />
+            <label htmlFor={guitarString}>{guitarString}</label>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div>
+        <p>Frets</p>
+        {FRETS.map((fret) => {
+          const fretString = fret.toString(10);
+          return (
+            <div>
+              <input
+                checked={configuredFrets[fret]}
+                id={fretString}
+                onChange={() => {
+                  setConfiguredFrets((currentConfiguredFrets) => {
+                    const currentValue = currentConfiguredFrets[fret];
+                    return {
+                      ...currentConfiguredFrets,
+                      [fret]: !currentValue,
+                    };
+                  });
+                }}
+                name={fretString}
+                type="checkbox"
+              />
+              <label htmlFor={fretString}>{fret}</label>
+            </div>
+          );
+        })}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
+
+const GUITAR_STRINGS: GuitarString[] = ['E', 'A', 'D', 'G', 'B', 'e'];
+
+const ALL_STRINGS_ENABLED: Record<GuitarString, boolean> = {
+  E: true,
+  A: true,
+  D: true,
+  G: true,
+  B: true,
+  e: true,
+};
+
+type GuitarString = 'E' | 'A' | 'D' | 'G' | 'B' | 'e';
+
+const FRETS: Fret[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+const ALL_FRETS_ENABLED: Record<Fret, boolean> = {
+  0: true,
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+  5: true,
+  6: true,
+  7: true,
+  8: true,
+  9: true,
+  10: true,
+  11: true,
+  12: true,
+};
+
+type Fret = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 export default App;
