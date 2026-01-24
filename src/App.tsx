@@ -18,7 +18,7 @@ function App() {
       <div>
         <p>Strings</p>
         {GUITAR_STRINGS.map((guitarString) => (
-          <div>
+          <div key={guitarString}>
             <input
               checked={stringConfiguration[guitarString]}
               id={guitarString}
@@ -43,7 +43,7 @@ function App() {
         {FRETS.map((fret) => {
           const fretString = fret.toString(10);
           return (
-            <div>
+            <div key={fretString}>
               <input
                 checked={fretConfiguration[fret]}
                 id={fretString}
