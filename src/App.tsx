@@ -65,6 +65,15 @@ function App() {
       {enabledStrings.length === 1 && enabledFrets.length === 1 && (
         <p>Please select at least two notes</p>
       )}
+      <button
+        disabled={
+          enabledStrings.length === 0 ||
+          enabledFrets.length === 0 ||
+          (enabledStrings.length === 1 && enabledFrets.length === 1)
+        }
+      >
+        Practice
+      </button>
     </>
   );
 }
