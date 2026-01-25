@@ -4,6 +4,7 @@ import { Fretboard } from './Fretboard';
 import { FRETS, type Fret } from './frets';
 import { GUITAR_STRINGS, type GuitarString } from './guitarStrings';
 import { useRandomNote } from './useRandomNote';
+import { NOTES, type Note } from './notes';
 
 function App() {
   const [stringConfiguration, setStringConfiguration] =
@@ -16,10 +17,11 @@ function App() {
   const enabledFrets = Object.entries(fretConfiguration)
     .filter(([_, enabled]) => enabled)
     .map(([fret]) => parseInt(fret, 10) as Fret);
-  const { fret, getNewNote, guitarString } = useRandomNote({
+  const { fret, getNewNote, guitarString, note } = useRandomNote({
     enabledStrings,
     enabledFrets,
   });
+  const [selectedNote, setSelectedNote] = useState<Note | undefined>();
   return (
     <>
       <h1>Rosewood</h1>
@@ -83,7 +85,31 @@ function App() {
         Practice
       </button>
       <Fretboard highlights={[{ fret, guitarString }]} />
-      <button onClick={getNewNote}>Next</button>
+      <fieldset>
+        {NOTES.map((note) => (
+          <div key={note}>
+            <input
+              checked={note === selectedNote}
+              id={note}
+              name="note"
+              onChange={() => setSelectedNote(note)}
+              type="radio"
+              value={note}
+            />
+            <label htmlFor={note}>{note}</label>
+          </div>
+        ))}
+      </fieldset>
+      {selectedNote === note && <p>correct!</p>}
+      {selectedNote && selectedNote !== note && <p>try again</p>}
+      <button
+        onClick={() => {
+          setSelectedNote(undefined);
+          getNewNote();
+        }}
+      >
+        Next
+      </button>
     </>
   );
 }
