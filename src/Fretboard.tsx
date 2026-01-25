@@ -78,14 +78,24 @@ export function Fretboard({
         r="10"
       />
       {highlights.map(({ fret, guitarString }) => {
+        const key = `${fret}-${guitarString}`;
         const stringPosition = STRING_POSITIONS[STRING_INDICES[guitarString]];
         if (fret === 0)
-          return <circle cx="20" cy={stringPosition} fill="orange" r="10" />;
+          return (
+            <circle
+              cx="20"
+              cy={stringPosition}
+              fill="orange"
+              key={key}
+              r="10"
+            />
+          );
         if (fret === 1)
           return (
             <rect
               fill="orange"
               height="20"
+              key={key}
               rx="10"
               ry="10"
               width={FRET_POSITIONS[0] - 50 - 20}
@@ -97,6 +107,7 @@ export function Fretboard({
           <rect
             fill="orange"
             height="20"
+            key={key}
             rx="10"
             ry="10"
             width={FRET_POSITIONS[fret - 1] - FRET_POSITIONS[fret - 2] - 20}
