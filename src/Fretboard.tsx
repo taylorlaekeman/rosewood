@@ -4,7 +4,7 @@ import type { GuitarString } from './guitarStrings';
 export function Fretboard({
   highlights = [],
 }: {
-  highlights?: Array<{ fret: Fret; guitarString: GuitarString }>;
+  highlights?: Array<{ fret?: Fret; guitarString?: GuitarString }>;
 }) {
   return (
     <svg
@@ -78,6 +78,7 @@ export function Fretboard({
         r="10"
       />
       {highlights.map(({ fret, guitarString }) => {
+        if (fret === undefined || guitarString === undefined) return;
         const key = `${fret}-${guitarString}`;
         const stringPosition = STRING_POSITIONS[STRING_INDICES[guitarString]];
         if (fret === 0)

@@ -3,6 +3,7 @@ import './App.css';
 import { Fretboard } from './Fretboard';
 import { FRETS, type Fret } from './frets';
 import { GUITAR_STRINGS, type GuitarString } from './guitarStrings';
+import { useRandomNote } from './useRandomNote';
 
 function App() {
   const [stringConfiguration, setStringConfiguration] =
@@ -11,10 +12,14 @@ function App() {
     useState<Record<Fret, boolean>>(ALL_FRETS_ENABLED);
   const enabledStrings = Object.entries(stringConfiguration)
     .filter(([_, enabled]) => enabled)
-    .map(([guitarString]) => guitarString);
+    .map(([guitarString]) => guitarString as GuitarString);
   const enabledFrets = Object.entries(fretConfiguration)
     .filter(([_, enabled]) => enabled)
-    .map((fret) => fret);
+    .map(([fret]) => parseInt(fret, 10) as Fret);
+  const { fret, getNewNote, guitarString } = useRandomNote({
+    enabledStrings,
+    enabledFrets,
+  });
   return (
     <>
       <h1>Rosewood</h1>
@@ -77,7 +82,8 @@ function App() {
       >
         Practice
       </button>
-      <Fretboard />
+      <Fretboard highlights={[{ fret, guitarString }]} />
+      <button onClick={getNewNote}>Next</button>
     </>
   );
 }
