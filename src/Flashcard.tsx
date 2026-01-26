@@ -8,7 +8,7 @@ export function Flashcard({
   count,
   fret,
   guitarString,
-  note,
+  note: expectedNote,
   onNext = () => {
     /* empty */
   },
@@ -31,7 +31,15 @@ export function Flashcard({
               checked={note === selectedNote}
               id={note}
               name="note"
-              onChange={() => setSelectedNote(note)}
+              onChange={() => {
+                setSelectedNote(note);
+                if (note === expectedNote) {
+                  setTimeout(() => {
+                    setSelectedNote(undefined);
+                    onNext();
+                  }, 1000);
+                }
+              }}
               type="radio"
               value={note}
             />
@@ -39,17 +47,8 @@ export function Flashcard({
           </div>
         ))}
       </fieldset>
-      {selectedNote === note && <p>correct!</p>}
-      {selectedNote && selectedNote !== note && <p>try again</p>}
-      <button
-        disabled={note !== selectedNote}
-        onClick={() => {
-          setSelectedNote(undefined);
-          onNext();
-        }}
-      >
-        Next
-      </button>
+      {selectedNote === expectedNote && <p>correct!</p>}
+      {selectedNote && selectedNote !== expectedNote && <p>try again</p>}
     </>
   );
 }
