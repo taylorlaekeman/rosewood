@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 import { Configuration } from './Configuration';
 import { Flashcard } from './Flashcard';
 import { type Fret } from './frets';
