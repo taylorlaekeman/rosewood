@@ -21,12 +21,14 @@ function App() {
   return (
     <>
       <h1>Rosewood</h1>
-      <Configuration
-        onConfigure={({ enabledFrets, enabledStrings }) => {
-          setEnabledFrets(enabledFrets);
-          setEnabledStrings(enabledStrings);
-        }}
-      />
+      {!enabledFrets && (
+        <Configuration
+          onConfigure={({ enabledFrets, enabledStrings }) => {
+            setEnabledFrets(enabledFrets);
+            setEnabledStrings(enabledStrings);
+          }}
+        />
+      )}
       {count > 10 ? (
         <>
           <p>done!</p>
