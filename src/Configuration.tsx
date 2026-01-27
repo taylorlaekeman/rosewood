@@ -23,9 +23,10 @@ export function Configuration({
       />
     );
   return (
-    <>
+    <div id="regimen-list">
       {PRESET_OPTIONS.map((option) => (
         <button
+          className="regimen"
           key={option.id}
           onClick={() => {
             onConfigure({
@@ -37,10 +38,13 @@ export function Configuration({
           {option.label}
         </button>
       ))}
-      <button onClick={() => setIsCustomConfiguration(true)}>
+      <button
+        className="regimen"
+        onClick={() => setIsCustomConfiguration(true)}
+      >
         Custom Configuration
       </button>
-    </>
+    </div>
   );
 }
 
