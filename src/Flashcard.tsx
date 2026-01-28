@@ -21,17 +21,21 @@ export function Flashcard({
 }) {
   const [selectedNote, setSelectedNote] = useState<Note | undefined>();
   return (
-    <>
+    <div id="flashcard">
       {count && <p>{`${count} / 10`}</p>}
       <Fretboard highlights={[{ fret, guitarString }]} />
-      <fieldset>
-        {NOTES.map((note) => (
-          <div key={note}>
-            <input
-              checked={note === selectedNote}
-              id={note}
-              name="note"
-              onChange={() => {
+      <div id="note-buttons">
+        {NOTES.map((note) => {
+          const classes = ['note-button'];
+          if (note === selectedNote && selectedNote === expectedNote)
+            classes.push('correct');
+          if (note === selectedNote && selectedNote !== expectedNote)
+            classes.push('incorrect');
+          return (
+            <button
+              className={classes.join(' ')}
+              key={note}
+              onClick={() => {
                 setSelectedNote(note);
                 if (note === expectedNote) {
                   setTimeout(() => {
@@ -40,15 +44,12 @@ export function Flashcard({
                   }, 1000);
                 }
               }}
-              type="radio"
-              value={note}
-            />
-            <label htmlFor={note}>{note}</label>
-          </div>
-        ))}
-      </fieldset>
-      {selectedNote === expectedNote && <p>correct!</p>}
-      {selectedNote && selectedNote !== expectedNote && <p>try again</p>}
-    </>
+            >
+              {note}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
